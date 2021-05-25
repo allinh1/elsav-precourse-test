@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <!--Create a website with a home page & contact page-->
 <html>
-    <head>
+    <header>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="contact.css">
         <title>Allens Cafe Project</title>
-    </head>
+    </header>
 
     <body>
         <nav>
@@ -22,14 +22,15 @@
         </nav>
     
     
-    </body>
+    
 
     <main>
-        <form class="contact-form">
+        <form class="contact-form" onsubmit="return submitMessage(event);">
+
             <label for="email"> Email: </label>
             <input type="text" name="email" id="email" required>
 
-            <label for="email"> Full Name: </label>
+            <label for="fullname"> Full Name: </label>
             <input type="text" name="fullname" id="fullname" required>
 
 
@@ -42,18 +43,45 @@
 
 
             <label for="comment">Comment:</label>
-            <textarea name="comment" id="comment" cols="30" rows="3">
- Leave your comment here
+            <textarea name="comment" id="comment" cols="30" rows="3" required>
+    Leave your comment here
             </textarea>
         
             <button>Clear</button>
 
-            <input type="Submit">
+            <input type="submit" value="Submit">
 
         </form>
-
-        </div>
-    
-  
     </main>
+
+    <script>
+        function submitMessage(event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const fullname = document.getElementById("fullname").value;
+            const feedbackType = document.getElementById("feedbackType").value;
+            const comment = document.getElementById("comment").value;
+
+            const messageObject = {
+                email, fullname, feedbackType, comment
+            };
+            
+            let currentMessages = [];
+            if (window.sessionStorage.getItem("messages")) {
+                currentMessages = 
+                    JSON.parse(
+                        window.sessionStorage.getItem("messages")
+                    );
+            }
+
+            currentMessages.push(messageObject)
+            window.sessionStorage.setItem(
+                "messages",
+                JSON.stringify(currentMessages)
+            );
+        }
+
+
+    </script>
+</body>
 </html>
