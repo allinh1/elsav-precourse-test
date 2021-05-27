@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--Create a website with a home page & contact page-->
+<html>
+    <header>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="contact.css">
+        <title>Allens Cafe Project</title>
+    </header>
+
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="Home.html">Home</a>
+                </li>
+                
+                <li>
+                    <a href="Contact Us.html">Contact Us</a>
+                </li>
+
+            </ul>
+        </nav>
+    
+    
+    
+
+    <main>
+        <form class="contact-form" onsubmit="return submitMessage(event);">
+
+            <label for="email"> Email: </label>
+            <input type="text" name="email" id="email" required>
+
+            <label for="fullName"> Full Name: </label>
+            <input type="text" name="fullName" id="fullName" required>
+
+
+            <label for="feedbackType">feedbackType:</label>
+            <select name="FeedbackType" id="feedbackType">
+                <option value="review">Review</option>
+                <option value="complaint">Complaint</option>
+                <option value="event">book event</option>                    
+            </select>
+
+
+            <label for="comment">Comment:</label>
+            <textarea name="comment" id="comment" cols="30" rows="3" required>
+    Leave your comment here
+            </textarea>
+        
+            <button type="reset" class="contact-btn">Clear</button>
+        
+            <input type="submit" value="Submit">
+            <div>
+                <dl id="currentMessages"></dl>
+            </div>
+
+                    <div>                <button class="contact-btn" onclick="deleteMessages();">Clear All</button>
+                <div>
+                    <dl id="currentMessages">
+
+                    </dl>
+                </div>
+
+            </section>
+            
+        </form>
+    </main>
+
+    <script>
+
+        function resetDetails() {
+            document.getElementById('resetForm').reset();
+            }
+
+        function deleteMessages() {
+            if (window.sessionStorage.getItem('messages')) 
+                window.sessionStorage.removeItem('messages');
+            }
+
+            renderMessages();
+        
+        function submitMessage(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const fullName = document.getElementById('fullName').value;
+            const feedbackType = document.getElementById('feedbackType').value;
+            const comment = document.getElementById('comment').value;
+
+            const messageObject = {
+                email, fullName, feedbackType, comment
+            };
+            
+            let currentMessages = [];
+            if (window.sessionStorage.getItem('messages')) {
+                currentMessages =
+                    JSON.parse(
+                        window.sessionStorage.getItem("messages")
+                    );
+            }
+
+            currentMessages.push(messageObject);
+            window.sessionStorage.setItem(
+                "messages",
+                JSON.stringify(currentMessages)
+            );
+
+            renderMessages();
+        }
+
+        function renderMessages() {
+            let currentMessages = [];
+
+            if (window.sessionStorage.getItem('messages')) {
+                currentMessages =
+                    JSON.parse(
+                        window.sessionStorage.getItem("messages")
+                    );
+            }
+        
+            let listItems = [];
+            for (let i = 0; i < currentMessages.length; i++) {
+                let listItem = '';
+                const currentMessage = currentMessages[i];
+                listItem += `<dt>${currentMessage.fullName} - ${currentMessage.email}</dt>`;
+                listItem += `<dd>${currentMessage.feedbackType}: ${currentMessage.comment}</dd>`;
+                listItem += `<br />`;
+                listItems.push(listItem);
+            }
+
+            let descList = document.getElementById('currentMessages');
+            descList.innerHTML = listItems.join('');
+        }
+
+        renderMessages();
+
+        
+    </script>
+</body>
+</html>
+
