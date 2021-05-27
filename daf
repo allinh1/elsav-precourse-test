@@ -1,0 +1,147 @@
+[1mdiff --git a/Contact-Us.html b/Contact-Us.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..03954fd[m
+[1m--- /dev/null[m
+[1m+++ b/Contact-Us.html[m
+[36m@@ -0,0 +1,141 @@[m
+[32m+[m[32m<!DOCTYPE html>[m
+[32m+[m[32m<!--Create a website with a home page & contact page-->[m
+[32m+[m[32m<html>[m
+[32m+[m[32m    <header>[m
+[32m+[m[32m        <link rel="stylesheet" href="styles.css">[m
+[32m+[m[32m        <link rel="stylesheet" href="contact.css">[m
+[32m+[m[32m        <title>Allens Cafe Project</title>[m
+[32m+[m[32m    </header>[m
+[32m+[m
+[32m+[m[32m    <body>[m
+[32m+[m[32m        <nav>[m
+[32m+[m[32m            <ul>[m
+[32m+[m[32m                <li>[m
+[32m+[m[32m                    <a href="Home.html">Home</a>[m
+[32m+[m[32m                </li>[m
+[32m+[m[41m                [m
+[32m+[m[32m                <li>[m
+[32m+[m[32m                    <a href="Contact Us.html">Contact Us</a>[m
+[32m+[m[32m                </li>[m
+[32m+[m
+[32m+[m[32m            </ul>[m
+[32m+[m[32m        </nav>[m
+[32m+[m[41m    [m
+[32m+[m[41m    [m
+[32m+[m[41m    [m
+[32m+[m
+[32m+[m[32m    <main>[m
+[32m+[m[32m        <form class="contact-form" onsubmit="return submitMessage(event);">[m
+[32m+[m
+[32m+[m[32m            <label for="email"> Email: </label>[m
+[32m+[m[32m            <input type="text" name="email" id="email" required>[m
+[32m+[m
+[32m+[m[32m            <label for="fullName"> Full Name: </label>[m
+[32m+[m[32m            <input type="text" name="fullName" id="fullName" required>[m
+[32m+[m
+[32m+[m
+[32m+[m[32m            <label for="feedbackType">feedbackType:</label>[m
+[32m+[m[32m            <select name="FeedbackType" id="feedbackType">[m
+[32m+[m[32m                <option value="review">Review</option>[m
+[32m+[m[32m                <option value="complaint">Complaint</option>[m
+[32m+[m[32m                <option value="event">book event</option>[m[41m                    [m
+[32m+[m[32m            </select>[m
+[32m+[m
+[32m+[m
+[32m+[m[32m            <label for="comment">Comment:</label>[m
+[32m+[m[32m            <textarea name="comment" id="comment" cols="30" rows="3" required>[m
+[32m+[m[32m    Leave your comment here[m
+[32m+[m[32m            </textarea>[m
+[32m+[m[41m        [m
+[32m+[m[32m            <button type="reset" class="contact-btn">Clear</button>[m
+[32m+[m[41m        [m
+[32m+[m[32m            <input type="submit" value="Submit">[m
+[32m+[m[32m            <div>[m
+[32m+[m[32m                <dl id="currentMessages"></dl>[m
+[32m+[m[32m            </div>[m
+[32m+[m
+[32m+[m[32m                    <div>                <button class="contact-btn" onclick="deleteMessages();">Clear All</button>[m
+[32m+[m[32m                <div>[m
+[32m+[m[32m                    <dl id="currentMessages">[m
+[32m+[m
+[32m+[m[32m                    </dl>[m
+[32m+[m[32m                </div>[m
+[32m+[m
+[32m+[m[32m            </section>[m
+[32m+[m[41m            [m
+[32m+[m[32m        </form>[m
+[32m+[m[32m    </main>[m
+[32m+[m
+[32m+[m[32m    <script>[m
+[32m+[m
+[32m+[m[32m        function resetDetails() {[m
+[32m+[m[32m            document.getElementById('resetForm').reset();[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m        function deleteMessages() {[m
+[32m+[m[32m            if (window.sessionStorage.getItem('messages'))[m[41m [m
+[32m+[m[32m                window.sessionStorage.removeItem('messages');[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m            renderMessages();[m
+[32m+[m[41m        [m
+[32m+[m[32m        function submitMessage(event) {[m
+[32m+[m[32m            event.preventDefault();[m
+[32m+[m
+[32m+[m[32m            const email = document.getElementById('email').value;[m
+[32m+[m[32m            const fullName = document.getElementById('fullName').value;[m
+[32m+[m[32m            const feedbackType = document.getElementById('feedbackType').value;[m
+[32m+[m[32m            const comment = document.getElementById('comment').value;[m
+[32m+[m
+[32m+[m[32m            const messageObject = {[m
+[32m+[m[32m                email, fullName, feedbackType, comment[m
+[32m+[m[32m            };[m
+[32m+[m[41m            [m
+[32m+[m[32m            let currentMessages = [];[m
+[32m+[m[32m            if (window.sessionStorage.getItem('messages')) {[m
+[32m+[m[32m                currentMessages =[m
+[32m+[m[32m                    JSON.parse([m
+[32m+[m[32m                        window.sessionStorage.getItem("messages")[m
+[32m+[m[32m                    );[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m            currentMessages.push(messageObject);[m
+[32m+[m[32m            window.sessionStorage.setItem([m
+[32m+[m[32m                "messages",[m
+[32m+[m[32m                JSON.stringify(currentMessages)[m
+[32m+[m[32m            );[m
+[32m+[m
+[32m+[m[32m            renderMessages();[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        function renderMessages() {[m
+[32m+[m[32m            let currentMessages = [];[m
+[32m+[m
+[32m+[m[32m            if (window.sessionStorage.getItem('messages')) {[m
+[32m+[m[32m                currentMessages =[m
+[32m+[m[32m                    JSON.parse([m
+[32m+[m[32m                        window.sessionStorage.getItem("messages")[m
+[32m+[m[32m                    );[m
+[32m+[m[32m            }[m
+[32m+[m[41m        [m
+[32m+[m[32m            let listItems = [];[m
+[32m+[m[32m            for (let i = 0; i < currentMessages.length; i++) {[m
+[32m+[m[32m                let listItem = '';[m
+[32m+[m[32m                const currentMessage = currentMessages[i];[m
+[32m+[m[32m                listItem += `<dt>${currentMessage.fullName} - ${currentMessage.email}</dt>`;[m
+[32m+[m[32m                listItem += `<dd>${currentMessage.feedbackType}: ${currentMessage.comment}</dd>`;[m
+[32m+[m[32m                listItem += `<br />`;[m
+[32m+[m[32m                listItems.push(listItem);[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m            let descList = document.getElementById('currentMessages');[m
+[32m+[m[32m            descList.innerHTML = listItems.join('');[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        renderMessages();[m
+[32m+[m
+[32m+[m[41m        [m
+[32m+[m[32m    </script>[m
+[32m+[m[32m</body>[m
+[32m+[m[32m</html>[m
+[32m+[m
